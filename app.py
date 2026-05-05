@@ -75,6 +75,7 @@ class Complaint(db.Model):
     status = db.Column(db.String(50), default="Pending")
     remark = db.Column(db.String(500), default="")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     filename = db.Column(db.String(200))
 
 
@@ -265,7 +266,7 @@ def public_home():
         uploaded_file = request.files.get("evidence")
         saved_filename = None
 
-        if not name or not phone or not email or not complaint_text:
+        if not name  or not complaint_text:
             return render_template(
                 "public.html",
                 file_error="All fields are required.",
@@ -323,9 +324,9 @@ def public_home():
         else:
             sentiment = "Neutral"
 
-        urgency = detect_urgency(complaint_text)
-        priority = calculate_priority(complaint_text)
-        department = classify_department(complaint_text)
+       # urgency = detect_urgency(complaint_text)
+        priority = request.form.get("priority")
+        department = request.form.get("department")
         ticket_id = generate_ticket_id()
 
         new_complaint = Complaint(
@@ -345,6 +346,7 @@ def public_home():
 
         db.session.add(new_complaint)
         db.session.commit()
+        return render_template("public.html", ticket_id=new_complaint.ticket_id)
 
         email_subject = "Complaint Registered Successfully"
         email_body = f"""
@@ -390,22 +392,18 @@ def track_complaint():
 
     if request.method == "POST":
         ticket_id = request.form.get("ticket_id", "").strip()
-        phone = request.form.get("phone", "").strip()
-
-        if not ticket_id and not phone:
-            error = "Please enter Tracking ID or Phone Number."
-        elif ticket_id and phone:
-            complaint = Complaint.query.filter_by(ticket_id=ticket_id, phone=phone).first()
-            if not complaint:
-                error = "No complaint found with the given Tracking ID and Phone Number."
-        elif ticket_id:
+        
+        if not ticket_id:
+            
+            
+            
+            error = "Please enter Risk ID."
+        else:
+            
             complaint = Complaint.query.filter_by(ticket_id=ticket_id).first()
             if not complaint:
-                error = "No complaint found with the given Tracking ID."
-        elif phone:
-            complaints = Complaint.query.filter_by(phone=phone).order_by(Complaint.id.desc()).all()
-            if not complaints:
-                error = "No complaints found with the given Phone Number."
+                
+                error = "No risk found with the given Risk ID."
 
     return render_template(
         "track.html",
@@ -549,6 +547,7 @@ def update_status(id):
     if user_department == "All" or complaint.department == user_department:
         complaint.status = request.form.get("status", complaint.status)
         complaint.remark = request.form.get("remark", "").strip()
+        complaint.updated_at = datetime.utcnow()
         db.session.commit()
 
         email_subject = f"Complaint Status Updated - {complaint.ticket_id}"
@@ -571,6 +570,31 @@ AI Grievance Management System
     return redirect(url_for("admin_dashboard"))
 
 
+@app.route("/delete_complaint/<int:id>", methods=["POST"])
+def delete_complaint(id):
+    if not session.get("logged_in"):
+        return redirect(url_for("login"))
+
+    complaint = Complaint.query.get_or_404(id)
+    user_department = session.get("department", "All")
+
+    if user_department != "All" and complaint.department != user_department:
+        return redirect(url_for("admin_dashboard"))
+
+    if complaint.filename:
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], complaint.filename)
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+            except Exception as e:
+                print("File delete failed:", e)
+
+    db.session.delete(complaint)
+    db.session.commit()
+
+    return redirect(url_for("admin_dashboard"))
+
+
 @app.route("/export")
 def export_csv():
     if not session.get("logged_in"):
@@ -585,7 +609,7 @@ def export_csv():
     complaints = query.order_by(Complaint.id.desc()).all()
 
     def generate():
-        yield "Ticket ID,Name,Phone,Email,Complaint,Sentiment,Urgency,Priority,Department,Status,Remark,Created At,Filename\n"
+        yield "Ticket ID,Name,Phone,Email,Complaint,Sentiment,Urgency,Priority,Department,Status,Remark,Created At,Updated At,Filename\n"
         for c in complaints:
             row = (
                 f'"{c.ticket_id}",'
@@ -600,6 +624,7 @@ def export_csv():
                 f'"{c.status}",'
                 f'"{c.remark}",'
                 f'"{c.created_at.strftime("%d %b %Y %H:%M")}",'
+                f'"{c.updated_at.strftime("%d %b %Y %H:%M") if c.updated_at else ""}",'
                 f'"{c.filename if c.filename else ""}"\n'
             )
             yield row

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Grievance Management System</title>
+    <title>Safety Risk Management Platformm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -298,20 +298,19 @@
         <div class="hero-shell">
             <div class="hero-top">
                 <div class="hero-icon">🏛️</div>
-                <h1 class="hero-title">Smart Grievance Management System</h1>
+                <h1 class="hero-title">Safety Risk Management Platform</h1>
                 <p class="hero-subtitle">
-                    A modern platform to submit, track, and manage public grievances with intelligent complaint routing,
-                    duplicate detection, analytics insights, priority scoring, and department-level action tracking.
+                    A modern platform to report, track, and manage safety risks with evidence uploads, status tracking, and real-time dashboard insights.
                 </p>
 
-                <div class="hero-badges">
-                    <span class="feature-pill">📌 Complaint Tracking</span>
-                    <span class="feature-pill">🧠 Duplicate Detection</span>
-                    <span class="feature-pill">⚡ Priority Scoring</span>
-                    <span class="feature-pill">🏢 Department Routing</span>
-                    <span class="feature-pill">📊 Analytics Dashboard</span>
-                    <span class="feature-pill">⏱ SLA Monitoring</span>
-                </div>
+               <div class="hero-badges">
+    <span class="feature-pill">📌 Risk Tracking</span>
+    <span class="feature-pill">📍 Location Selection</span>
+    <span class="feature-pill">⚡ Status Tracking</span>
+    <span class="feature-pill">📊 Dashboard Insights</span>
+    <span class="feature-pill">📎 Evidence Upload</span>
+    <span class="feature-pill">⏱ SLA Monitoring</span>
+</div>
             </div>
 
             <div class="portal-grid">
@@ -319,13 +318,13 @@
                     <div class="col-lg-4">
                         <div class="portal-card">
                             <div class="portal-icon">📝</div>
-                            <div class="portal-title">Citizen Portal</div>
+                            <div class="portal-title">Risk Reporting</div>
                             <div class="portal-desc">
-                                Register a grievance with complaint details and evidence files so the issue can be classified and forwarded to the right department.
+                               Report a safety risk with details and supporting evidence so it can be logged and tracked efficiently.
                             </div>
-                            <div class="portal-meta">Best for new complaint registration</div>
+                            <div class="portal-meta"></div>
                             <a href="{{ url_for('public_home') }}" class="btn custom-btn btn-primary-soft w-100">
-                                Submit Complaint
+                                Submit Risk
                             </a>
                         </div>
                     </div>
@@ -333,9 +332,10 @@
                     <div class="col-lg-4">
                         <div class="portal-card">
                             <div class="portal-icon">🔎</div>
-                            <div class="portal-title">Track Complaint</div>
+                            <div class="portal-title">Best for reporting new safety risks</div>
                             <div class="portal-desc">
-                                View current complaint status, department handling, action remarks, and supporting evidence using tracking details.
+                               View current risk status, action updates, and supporting evidence using your Risk ID.
+Track using your Risk ID anytime.
                             </div>
                             <div class="portal-meta">Track by Ticket ID or Phone Number</div>
                             <a href="{{ url_for('track_complaint') }}" class="btn custom-btn btn-warning-soft w-100">
@@ -349,7 +349,9 @@
                             <div class="portal-icon">🔐</div>
                             <div class="portal-title">Department Login</div>
                             <div class="portal-desc">
-                                Access the admin dashboard for filtering complaints, updating status, adding remarks, exporting data, and viewing analytics.
+                                Admin Dashboard
+Access the dashboard to manage risks, update status, add remarks, export data, and view analytics.
+Authorized access only
                             </div>
                             <div class="portal-meta">Authorized department access only</div>
                             <a href="{{ url_for('login') }}" class="btn custom-btn btn-dark-soft w-100">
@@ -366,25 +368,31 @@
                     <div class="step-grid">
                         <div class="step-box">
                             <div class="step-number">1</div>
-                            <div class="step-title">Complaint submission</div>
+                            <div class="step-title">Risk Submission</div>
                             <div class="step-desc">
-                                Citizens submit grievances with details and optional evidence through a simple guided form.
+                               Workers report safety risks with relevant details and optional evidence through a simple form.
                             </div>
                         </div>
 
                         <div class="step-box">
                             <div class="step-number">2</div>
-                            <div class="step-title">Intelligent processing</div>
+                            <div class="step-title">Processing</div>
                             <div class="step-desc">
-                                The system analyzes sentiment, urgency, priority, similarity, and department ownership automatically.
-                            </div>
+                               
+
+The system logs each risk, assigns priority, and tracks its status for further action.
+</div>
+
                         </div>
 
                         <div class="step-box">
                             <div class="step-number">3</div>
-                            <div class="step-title">Action and tracking</div>
+                            <div class="step-title">Monitoring and Tracking
+
+</div>
+
                             <div class="step-desc">
-                                Departments update status and remarks while citizens track progress transparently in real time.
+                               Admins update risk status and remarks while workers track progress using their Risk ID.
                             </div>
                         </div>
                     </div>
@@ -392,7 +400,7 @@
             </div>
 
             <div class="footer-note">
-                Designed for transparent, organized, and analytics-driven grievance resolution.
+                Designed for efficient, transparent, and structured safety risk management.
             </div>
         </div>
     </div>

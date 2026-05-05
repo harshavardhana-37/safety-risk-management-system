@@ -247,7 +247,7 @@
         }
 
         .table {
-            min-width: 1220px;
+            min-width: 1380px;
             margin-bottom: 0;
         }
 
@@ -350,6 +350,18 @@
             font-weight: 800;
             background: linear-gradient(135deg, #1f2937, #111827);
             color: white;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .delete-submit {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            width: 100%;
         }
 
         .empty-box {
@@ -449,7 +461,7 @@
                 <div class="row g-4">
                     <div class="col-lg-6">
                         <div class="glass-card chart-card">
-                            <div class="chart-title">📌 Complaints by Status</div>
+                            <div class="chart-title">📌 Risks by Status</div>
                             <div class="chart-wrap">
                                 <canvas id="statusChart"></canvas>
                             </div>
@@ -467,7 +479,7 @@
 
                     <div class="col-lg-8">
                         <div class="glass-card chart-card">
-                            <div class="chart-title">🏢 Complaints by Department</div>
+                            <div class="chart-title">🏢 Risks by Location</div>
                             <div class="chart-wrap">
                                 <canvas id="departmentChart"></canvas>
                             </div>
@@ -539,15 +551,15 @@
 
                             {% if user_department == "All" %}
                             <div class="col-md-3">
-                                <label class="form-label">Department</label>
-                                <select name="department" class="form-select">
-                                    <option value="">All</option>
-                                    <option value="Public Works Department" {% if department_filter == "Public Works Department" %}selected{% endif %}>Public Works Department</option>
-                                    <option value="Water Supply Department" {% if department_filter == "Water Supply Department" %}selected{% endif %}>Water Supply Department</option>
-                                    <option value="Electricity Board" {% if department_filter == "Electricity Board" %}selected{% endif %}>Electricity Board</option>
-                                    <option value="Municipal Corporation" {% if department_filter == "Municipal Corporation" %}selected{% endif %}>Municipal Corporation</option>
-                                    <option value="General Administration" {% if department_filter == "General Administration" %}selected{% endif %}>General Administration</option>
-                                </select>
+                                 <label class="form-label">Location</label>
+<select name="department" class="form-select">
+    <option value="">All</option>
+    <option value="First Floor" {% if department_filter == "First Floor" %}selected{% endif %}>First Floor</option>
+    <option value="Second Floor" {% if department_filter == "Second Floor" %}selected{% endif %}>Second Floor</option>
+    <option value="Warehouse" {% if department_filter == "Warehouse" %}selected{% endif %}>Warehouse</option>
+    <option value="Machine Area" {% if department_filter == "Machine Area" %}selected{% endif %}>Machine Area</option>
+</select>
+                            </div>
                             </div>
                             {% endif %}
 
@@ -594,6 +606,7 @@
                                     <th>SLA</th>
                                     <th>Evidence</th>
                                     <th>Update</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -670,6 +683,12 @@
                                                 <textarea name="remark" class="form-control form-control-sm" rows="2" placeholder="Enter action taken / remark">{{ c.remark }}</textarea>
                                             </div>
                                             <button type="submit" class="update-submit">Update</button>
+                                        </form>
+                                    </td>
+
+                                    <td class="update-box">
+                                        <form method="POST" action="{{ url_for('delete_complaint', id=c.id) }}" onsubmit="return confirm('Are you sure you want to delete this complaint?');">
+                                            <button type="submit" class="delete-submit">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

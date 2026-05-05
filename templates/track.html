@@ -61,7 +61,6 @@ body {
     border: 1px solid #e2e8f0;
     margin-top: 10px;
 }
-
 </style>
 </head>
 
@@ -75,12 +74,10 @@ body {
 <form method="POST">
 <div class="row">
 <div class="col-md-6">
-<input type="text" name="ticket_id" class="form-control" placeholder="Tracking ID">
+<input type="text" name="ticket_id" class="form-control" placeholder="Tracking ID" value="{{ prefill_ticket_id }}">
 </div>
 
-<div class="col-md-6">
-<input type="text" name="phone" class="form-control" placeholder="Phone Number">
-</div>
+
 
 <div class="col-12 mt-3">
 <button class="btn btn-main w-100">Track</button>
@@ -128,7 +125,7 @@ body {
 <div class="dot done"></div>
 <div>
 <b>In Progress</b><br>
-{{ complaint.updated_at.strftime("%d %b %Y %I:%M %p") }}
+{{ complaint.updated_at.strftime("%d %b %Y %I:%M %p") if complaint.updated_at else complaint.created_at.strftime("%d %b %Y %I:%M %p") }}
 </div>
 </div>
 
@@ -137,7 +134,7 @@ body {
 <div class="dot done"></div>
 <div>
 <b>Resolved</b><br>
-{{ complaint.updated_at.strftime("%d %b %Y %I:%M %p") }}
+{{ complaint.updated_at.strftime("%d %b %Y %I:%M %p") if complaint.updated_at else complaint.created_at.strftime("%d %b %Y %I:%M %p") }}
 </div>
 </div>
 
@@ -146,7 +143,7 @@ body {
 <div class="dot reject"></div>
 <div>
 <b>Rejected</b><br>
-{{ complaint.updated_at.strftime("%d %b %Y %I:%M %p") }}
+{{ complaint.updated_at.strftime("%d %b %Y %I:%M %p") if complaint.updated_at else complaint.created_at.strftime("%d %b %Y %I:%M %p") }}
 </div>
 </div>
 {% endif %}
@@ -169,6 +166,34 @@ View Evidence
 </a>
 {% endif %}
 
+</div>
+{% endif %}
+
+{% if complaints %}
+<div class="card mt-4">
+    <h5><b>Complaints Found</b></h5>
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>location</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in complaints %}
+                <tr>
+                    <td>{{ c.ticket_id }}</td>
+                    <td>{{ c.department }}</td>
+                    <td>{{ c.status }}</td>
+                    <td>{{ c.created_at.strftime("%d %b %Y %I:%M %p") }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endif %}
 
