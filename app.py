@@ -16,9 +16,9 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 
 # Database configuration
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////opt/render/project/src/complaints.db"
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(BASE_DIR, "complaints.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 # Upload configuration
 UPLOAD_FOLDER = "static/uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf"}
@@ -27,10 +27,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 db = SQLAlchemy(app)
-with app.app_context():
-    print("DB CREATED SUCCESSFULLY")
 
-    db.create_all()
 
 # Email configuration
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
@@ -81,7 +78,11 @@ class Complaint(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     filename = db.Column(db.String(200))
+with app.app_context():
 
+    print("CREATING TABLES NOW...")
+
+    db.create_all()
 
 urgent_keywords = ["immediately", "urgent", "asap", "emergency", "danger", "serious"]
 
