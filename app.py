@@ -256,16 +256,15 @@ def public_home():
             ticket_id = complaint.ticket_id
             success_message = "Complaint submitted successfully."
 
-    if request.method == "POST":
-        name = request.form.get("name", "").strip()
-        phone = request.form.get("phone", "").strip()
-        email = request.form.get("email", "").strip()
-        complaint_text = request.form.get("complaint", "").strip()
-        force_submit = request.form.get("force_submit", "").strip()
+   if request.method == "POST":
+    name = request.form.get("name", "").strip()
+    phone = request.form.get("phone", "").strip() if request.form.get("phone") else "N/A"
+    email = request.form.get("email", "").strip() if request.form.get("email") else "N/A"
+    complaint_text = request.form.get("complaint", "").strip()
+    force_submit = request.form.get("force_submit", "").strip()
 
-        uploaded_file = request.files.get("evidence")
-        saved_filename = None
-
+    uploaded_file = request.files.get("evidence")
+    saved_filename = None
         if not name  or not complaint_text:
             return render_template(
                 "public.html",
@@ -324,9 +323,9 @@ def public_home():
         else:
             sentiment = "Neutral"
 
-       # urgency = detect_urgency(complaint_text)
-        priority = request.form.get("priority")
-        department = request.form.get("department")
+       urgency = detect_urgency(complaint_text)
+       priority = request.form.get("priority") or "Low"
+       department = request.form.get("department") or "General Administration"
         ticket_id = generate_ticket_id()
 
         new_complaint = Complaint(
