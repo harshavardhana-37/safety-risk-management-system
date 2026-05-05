@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 
 # Database configuration
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///complaints.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////opt/render/project/src/complaints.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Upload configuration
@@ -28,6 +28,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 db = SQLAlchemy(app)
 with app.app_context():
+    print("DB CREATED SUCCESSFULLY")
 
     db.create_all()
 
