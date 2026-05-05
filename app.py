@@ -27,6 +27,9 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 db = SQLAlchemy(app)
+with app.app_context():
+
+    db.create_all()
 
 # Email configuration
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
@@ -324,7 +327,7 @@ def public_home():
         else:
             sentiment = "Neutral"
 
-        urgency = detect_urgency(complaint_text)
+        # urgency = detect_urgency(complaint_text)
         priority = request.form.get("priority") or "Low"
         department = request.form.get("department") or "General Administration"
         ticket_id = generate_ticket_id()
