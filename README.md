@@ -1,19 +1,28 @@
 # 🛡️ Safety Compliance & Risk Management Platform
 
-A web-based platform built to manage safety issues, corrective actions, and workflow tracking through a centralized dashboard system.
+A web-based platform designed to streamline safety issue reporting, corrective action tracking, and workflow management through a centralized dashboard system.
 
-The platform allows users to:
-- report safety risks/issues
+The platform enables users to:
+- report and manage safety risks/issues
 - assign corrective actions
-- track issue progress
-- manage workflows
-- monitor issue resolution status
+- monitor issue resolution progress
+- manage approval workflows
+- track compliance activities efficiently
 
 ---
 
 # 🚀 Live Demo
 
-[PASTE_YOUR_DEPLOYED_LINK]
+https://safety-risk-management-system.onrender.com/
+
+---
+
+# 🔗 GitHub Repository
+
+[Safety Risk Management System Repository](https://github.com/harshavardhana?utm_source=chatgpt.com)
+
+Repository:
+https://github.com/harshavardhana-37/safety-risk-management-system
 
 ---
 
@@ -29,10 +38,10 @@ The platform allows users to:
 
 - Safety issue/risk reporting
 - Corrective action tracking
-- Workflow status management
+- Workflow management
 - Dashboard monitoring
-- Issue tracking system
-- Location & assignee management
+- Status tracking system
+- Assignee & location management
 - Responsive UI
 
 ---
@@ -53,33 +62,64 @@ OPEN → ASSIGNED → IN PROGRESS → RESOLVED → APPROVED → CLOSED
 
 ---
 
-# ▶️ Run Locally
+# ▶️ Setup Steps
 
-Open the project folder and run:
+Clone the repository:
+
+```bash
+git clone https://github.com/harshavardhana-37/safety-risk-management-system.git
+```
+
+Go to the project folder:
+
+```bash
+cd safety-risk-management-system
+```
+
+Run the application:
 
 ```bash
 python app.py
 ```
 
+The application will start on the local server.
+
 ---
 
-# 🏗️ Project Approach
+# 🏗️ Architecture Decisions
 
-The project was built as a scalable MVP focusing on:
-- workflow management
-- issue tracking
-- dashboard visibility
-- modular architecture
+The project was built using a modular MVP approach focusing on:
+- workflow-based issue management
+- maintainable architecture
+- centralized dashboard visibility
+- scalable backend logic
 
-The structure allows future expansion with:
-- RBAC
-- PDF/CSV reports
-- notifications
-- file uploads
-- advanced filtering
+The application structure separates:
+- frontend UI handling
+- backend business logic
+- database operations
+
+This approach improves maintainability and future scalability.
+
+---
+
+# 🧩 Extensibility Approach
+
+The platform architecture supports future enhancements such as:
+- Role-Based Access Control (RBAC)
+- PDF/CSV report generation
+- Notifications
+- File uploads
+- Advanced filtering
+- Audit management
+- Activity logs
+- Configurable workflows
+
+The current implementation prioritizes core workflow handling and issue tracking while keeping the platform extensible for future compliance use cases.
 
 ---
 
 # 👨‍💻 Author
 
 Harshavardhana
+````  [oai_citation:0‡github.com](https://github.com/harshavardhana?utm_source=chatgpt.com)
